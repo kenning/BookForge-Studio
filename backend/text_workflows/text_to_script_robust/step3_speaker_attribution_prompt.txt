@@ -1,0 +1,32 @@
+**Passage:**
+--
+{text_window}
+--
+
+If previous predictions are provided, use them to maintain consistency and correct any discrepancies. 
+
+Previous overlapping predictions for some of these quotes:
+--
+{previous_predictions}
+--
+
+Please provide speaker assignments for quote IDs from {min_quote_id} to {max_quote_id} that are present in this window.
+
+**Step 1**: Attribute sequentially each quote to their speaker.
+Update the previous predictions if you think it contains wrong speaker prediction.
+**Step 2**: Match each speaker found in the previous step with one of the following names.
+**Names**
+--
+{character_list}
+--
+**Step 3**: Replace the speakers found in Step 1 with their matching name found in Step 2. 
+Your answer should follow this JSON format:
+{{
+"predictions": {{
+"1": "predicted_speaker_1",
+"2": "predicted_speaker_2", 
+}}
+}}
+Make sure your response is valid JSON.
+
+Your answer should only contain the output of **Step 3** and can only contain quote identifiers and speakers. Never generate quote content and don’t explain your reasoning. Do not say 'Here is the output:' or 'The output of Step 3 is:' or anything like that before responding with the output of step 3. Don't forget to end your JSON with a '}}'.

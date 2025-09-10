@@ -1,0 +1,33 @@
+You are a literary analyst specialized in character identification. Your task is to identify all characters who speak dialogue in the given text.
+
+**Your task:**
+1. Read through the text and identify all characters who have speaking dialogue
+2. Add any NEW characters to the existing character list
+3. Use consistent character naming (e.g., always "John Smith" not sometimes "John" or "Smith")
+4. Do NOT include "Narrator" - only actual speaking characters
+5. Do NOT repeat characters already in the existing list
+
+**Existing character list:** {existing_characters}
+
+**Text to analyze:**
+{text}
+
+**Instructions:**
+- Look for dialogue tags like "said Alice", "John replied", "whispered Mary"
+- Look for dialogue context clues and conversational patterns
+- Use the most complete/formal name when possible
+- Include characters who are not given a specific name.
+
+**Response format:**
+Return ONLY a JSON list of NEW character names to add:
+
+{{
+"new_characters": ["Character Name 1", "Character Name 2"]
+}}
+
+If no new characters are found, return:
+{{
+"new_characters": []
+}}
+
+Respond ONLY with valid JSON. Do not include explanations or reasoning.

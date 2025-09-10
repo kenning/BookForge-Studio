@@ -1,0 +1,155 @@
+/* Dark Theme (Default) */
+:root {
+  /* Background colors */
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #3a3a3a;
+  --bg-quaternary: #4a4a4a;
+  --bg-highlight: #666;
+
+  /* Text colors */
+  --text-primary: #e0e0e0;
+  --text-secondary: #c0c0c0;
+  --text-tertiary: #a0a0a0;
+  --text-inverse: #1a1a1a;
+
+  /* Border colors */
+  --border-primary: #404040;
+  --border-secondary: #505050;
+  --border-focus: #667eea;
+
+  /* Category colors - darker versions that maintain the same hue */
+  --category-parameter-setting: #1e3a52;
+  --category-text-processing: #3d2142;
+  --category-audio-generation: #2d3f2d;
+  --category-audio-processing: #4a4020;
+  --category-export: #4a3220;
+  --category-default: #3a3a3a;
+
+  /* Special background colors */
+  --bg-red-light: #4a2020;
+
+  /* Accent colors */
+  --accent-primary: #7c8ffc;
+  --accent-primary-hover: #8a9cff;
+  --accent-secondary: #8f6bc7;
+  --accent-success: #40c057;
+  --accent-success-hover: #51cf66;
+  --accent-danger: #fa5252;
+  --accent-danger-hover: #ff6b6b;
+  --accent-warning: #ffd43b;
+  --accent-info: #339af0;
+
+  /* Gradient colors */
+  --gradient-primary: linear-gradient(135deg, #7c8ffc 0%, #8f6bc7 100%);
+
+  /* Shadow colors */
+  --shadow-primary: rgba(0, 0, 0, 0.3);
+  --shadow-secondary: rgba(0, 0, 0, 0.4);
+  --shadow-accent: rgba(124, 143, 252, 0.3);
+  --shadow-accent-hover: rgba(124, 143, 252, 0.4);
+
+  /* Navigation colors */
+  --nav-bg: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%);
+  --nav-text: rgba(224, 224, 224, 0.8);
+  --nav-text-active: #ffffff;
+  --nav-bg-hover: rgba(255, 255, 255, 0.1);
+  --nav-bg-active: rgba(255, 255, 255, 0.15);
+  --nav-border-active: #7c8ffc;
+
+  /* Form colors */
+  --input-bg: #3a3a3a;
+  --input-border: #505050;
+  --input-border-focus: #7c8ffc;
+  --input-focus-shadow: rgba(124, 143, 252, 0.1);
+
+  /* Status colors */
+  --status-error-bg: #4a1f1f;
+  --status-error-border: #6b2c2c;
+  --status-error-text: #ff9999;
+  --status-warning-bg: #4a3f1f;
+  --status-warning-border: #6b5a2c;
+  --status-warning-text: #ffcc99;
+
+  /* Timeline track */
+  --timeline-gradient-bg: #1a1a1a;
+  --timeline-gradient-fg: #5c2d85;
+}
+
+/* Light Theme */
+[data-theme='light'] {
+  /* Background colors */
+  --bg-primary: #f8f9fa;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f3f4;
+  --bg-quaternary: #e9ecef;
+  --bg-highlight: #aaa;
+
+  /* Text colors */
+  --text-primary: #333333;
+  --text-secondary: #495057;
+  --text-tertiary: #6c757d;
+  --text-inverse: #ffffff;
+
+  /* Border colors */
+  --border-primary: #e9ecef;
+  --border-secondary: #dee2e6;
+  --border-focus: #667eea;
+
+  /* Category colors */
+  --category-parameter-setting: #e3f2fd;
+  --category-text-processing: #f3e5f5;
+  --category-audio-generation: #e8f5e8;
+  --category-audio-processing: #fff8e1;
+  --category-export: #fff3e0;
+  --category-default: #f5f5f5;
+
+  /* Special background colors */
+  --bg-red-light: #ffecec;
+
+  /* Accent colors */
+  --accent-primary: #667eea;
+  --accent-primary-hover: #5a6fd8;
+  --accent-secondary: #764ba2;
+  --accent-success: #28a745;
+  --accent-success-hover: #218838;
+  --accent-danger: #dc3545;
+  --accent-danger-hover: #c82333;
+  --accent-warning: #ffc107;
+  --accent-info: #17a2b8;
+
+  /* Gradient colors */
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+  /* Shadow colors */
+  --shadow-primary: rgba(0, 0, 0, 0.1);
+  --shadow-secondary: rgba(0, 0, 0, 0.15);
+  --shadow-accent: rgba(102, 126, 234, 0.3);
+  --shadow-accent-hover: rgba(102, 126, 234, 0.4);
+
+  /* Navigation colors */
+  --nav-bg: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+  --nav-text: rgba(255, 255, 255, 0.8);
+  --nav-text-active: #ffffff;
+  --nav-bg-hover: rgba(255, 255, 255, 0.1);
+  --nav-bg-active: rgba(255, 255, 255, 0.15);
+  --nav-border-active: #3498db;
+
+  /* Form colors */
+  --input-bg: #ffffff;
+  --input-border: #e9ecef;
+  --input-border-focus: #667eea;
+  --input-focus-shadow: rgba(102, 126, 234, 0.1);
+
+  /* Status colors */
+  --status-error-bg: #fee;
+  --status-error-border: #fcc;
+  --status-error-text: #c33;
+  --status-warning-bg: #fff3cd;
+  --status-warning-border: #ffeaa7;
+  --status-warning-text: #856404;
+
+  /* Timeline track */
+  --timeline-gradient-bg: #ffffff;
+  --timeline-gradient-fg: #be96e1;
+}

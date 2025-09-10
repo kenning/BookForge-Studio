@@ -1,0 +1,10 @@
+torch
+transformers>=4.53.2
+librosa
+torchaudio
+numpy
+scipy
+soundfile
+datasets
+accelerate
+flash-attn>=2.0.0

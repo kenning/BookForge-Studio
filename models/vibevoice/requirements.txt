@@ -1,0 +1,18 @@
+setuptools
+wheel
+torch
+torchaudio
+accelerate==1.6.0
+transformers==4.51.3 # "we develop this project on transformers==4.51.3, later version may not be compatible"
+diffusers
+tqdm
+numpy
+scipy
+librosa
+ml-collections
+absl-py
+gradio
+av
+aiortc
+librosa
+# Vibevoice benefits from flash-attn but works better if installed after requirements.txt

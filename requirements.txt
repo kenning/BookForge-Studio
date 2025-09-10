@@ -1,0 +1,26 @@
+# Core FastAPI and web framework
+fastapi>=0.104.1
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+
+numpy<2
+faster-whisper
+openai-whisper
+ffmpeg-python
+auto-editor
+librosa>=0.10.0
+datasets
+nltk
+pytest
+pytest-asyncio
+pandas>=2.0.0
+pydantic>=2.4.0
+pathlib2>=2.3.7; python_version < "3.4"
+requests>=2.31.0
+tqdm>=4.66.0
+aiofiles>=23.2.0
+huggingface_hub
+pydub
+langchain-ollama>=0.3.0
+langchain>=0.1.0
+

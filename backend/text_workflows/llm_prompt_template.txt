@@ -1,0 +1,49 @@
+Please change the following work of fiction into a CSV with two columns:
+"Text" and "Speaker". 
+The "Text" column should be the unchanged text from the input, and should continue until a quote 
+begins or ends. The "Speaker" column should be the name of the speaker, or "Narrator" if it is
+narration.
+
+Example:
+
+### Input:
+CHAPTER I.
+It is a truth universally acknowledged, that a single man in possession
+of a good fortune, must be in want of a wife.
+However little known the feelings or views of such a man may be on his
+first entering a neighbourhood, this truth is so well fixed in the minds
+of the surrounding families, that he is considered as the rightful
+property of some one or other of their daughters.
+"My dear Mr. Bennet," said his lady to him one day, "have you heard that
+Netherfield Park is let at last?"
+Mr. Bennet replied that he had not.
+"But it is," returned she; "for Mrs. Long has just been here, and she
+told me all about it."
+###
+
+### Output:
+Text,Speaker
+"CHAPTER I. It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife. However little known the feelings or views of such a man may be on his first entering a neighbourhood, this truth is so well fixed in the minds of the surrounding families, that he is considered as the rightful property of some one or other of their daughters.",Narrator
+"""My dear Mr. Bennet,""",Mrs. Bennet
+"said his lady to him one day,",Narrator
+"""have you heard that Netherfield Park is let at last?""",Mrs. Bennet
+Mr. Bennet replied that he had not.,Narrator
+"""But it is,""",Mrs. Bennet
+returned she;,Narrator
+"""for Mrs. Long has just been here, and she told me all about it.""",Mrs. Bennet
+###
+
+* Note that you already know this passage because it is a famous book, but you will likely not know 
+the following text. You need to decide what the speaker is given the context of the passage.
+* The triple quotes here are an important part of CSV formatting -- it indicates that there is an
+actual quotation mark in the text. Use this if necessary; however you may find that explicit open
+and closed quote marks are present instead, in which case this will not be necessary.
+* Please do not include any other text in the output. 
+* DO NOT include your reasoning.
+* Do not provide commentary on changes made.
+* Simply return the processed CSV.
+* DO NOT include the string "### Output:" in the output.
+
+Here is the text to process:
+
+{file_content}
