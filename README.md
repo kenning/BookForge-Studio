@@ -75,6 +75,19 @@ drop files in the interface. (Output files will generate in `files/output`.)
 
 Check out [README-developers.md](./README-developers.md)
 
+## Licenses
+
+This repo is MIT licensed.
+
+Chatterbox and VibeVoice are MIT. Dia and Higgs are Apache 2.0. 
+
+## Possible future work
+
+If there is interest, our team may provide support for IndexTTS2. However, the emotion control is
+a pretty large new feature just for that one model, adoption appears low for now, and 
+[the Bilibili license](https://github.com/index-tts/index-tts?tab=License-1-ov-file#readme) is
+not exactly full open source.
+
 ## Thanks
 
 Thanks to [psdwizzard](https://github.com/psdwizzard) and 
