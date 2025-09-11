@@ -30,6 +30,11 @@
    swapped out and even run in parallel if you find one model is good for a certain thing. New 
    open source AI audio models will be added as they are released. 
 
+* **Support single-speaker and multi-speaker generation.** Some models like dia only do 
+   multi-speaker generation, many models only do single-speaker. Some like higgs do both. We aim
+   to support whichever modes are viable, or both for experimentation purposes, with voice clones 
+   correctly assigned to each party.
+
 * **Models run on a separate process to the main server.** This means you need to run the main
    server, open another command prompt, and then start a process for the model you want to use.
    Some of these models take tons of VRAM -- higgs specifically is gigantic. Some are smaller like
