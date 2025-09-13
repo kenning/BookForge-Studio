@@ -2,7 +2,7 @@
 
 ## TL;DR Get it set up and running locally
 
-1. Install ffmpeg and python 3.10. (Other python versions are currently untested.)
+1. Install python 3.10. (Other python versions are currently untested.)
 
 1. `pip install -r requirements.txt`
 

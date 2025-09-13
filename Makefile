@@ -2,8 +2,7 @@
 
 ## [For users] Setup and installation
 .PHONY: install
-install: ## Install ffmpeg and Python dependencies
-	sudo apt-get update && sudo apt-get install -y ffmpeg
+install: ## Install Python dependencies
 	pip install -r requirements.txt
 
 ## [For users] Start the server
