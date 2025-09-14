@@ -74,9 +74,16 @@ def create_actor_files_from_sampler_dataset():
 async def create_script_from_anita_dataset():
     # Read all files from files/input/csv/ANITA/
     anita_dir_wuthering_heights = Path("files/input/csv/ANITA/wuthering_heights")
+    base_path = Path("files/input")
+
     try:
         for file in anita_dir_wuthering_heights.glob("*.csv"):
-            no_file_slash = str(anita_dir_wuthering_heights / file.name)[6:]
+            # Normally would be like 'files/input/csv/ANITA/wuthering_heights',
+            # remove first 2 folders
+            relative_path = (anita_dir_wuthering_heights / file.name).relative_to(
+                base_path
+            )
+            no_file_slash = str(relative_path)
 
             response = await _execute_text_workflow_background(
                 "csv_to_psss", {"filepath": no_file_slash}, "0"

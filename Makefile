@@ -1,11 +1,5 @@
 .DEFAULT_GOAL := help
 
-## [For users] Setup and installation
-.PHONY: install
-install: ## Install ffmpeg and Python dependencies
-	sudo apt-get update && sudo apt-get install -y ffmpeg
-	pip install -r requirements.txt
-
 ## [For users] Start the server
 .PHONY: main
 main: ## Run the main server

@@ -1,4 +1,9 @@
 #!/bin/bash
+
+# Note: this is a very casual AI slop script for setting up ollama. 
+# This could definitely be improved or removed -- it's just a tool the devs used a couple times
+# to try things out
+
 set -e
 
 export OLLAMA_KEEP_ALIVE=30m

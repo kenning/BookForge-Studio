@@ -9,7 +9,7 @@ echo    BookForge Studio - Windows
 echo =====================================
 echo.
 echo [Setup/Installation Commands]
-echo 1) Install dependencies (ffmpeg + pip)
+echo 1) Install dependencies (pip)
 echo.
 echo [Production/Server Commands]
 echo 2) Start main server
@@ -40,10 +40,6 @@ if "%choice%"=="10" goto exit
 goto invalid_choice
 
 :install_deps
-echo.
-echo Installing dependencies...
-echo Installing ffmpeg (requires chocolatey or manual installation)...
-echo Please ensure chocolatey is installed, then run: choco install ffmpeg
 echo.
 echo Installing Python requirements...
 pip install -r requirements.txt
