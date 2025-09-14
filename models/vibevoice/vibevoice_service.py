@@ -433,10 +433,10 @@ def configure_model(use_large=False):
     """Configure model path and name based on variant."""
     global MODEL_PATH, MODEL_NAME
     if use_large:
-        MODEL_PATH = "aoi-ot/VibeVoice-7B"
+        MODEL_PATH = "vibevoice/VibeVoice-7B"
         MODEL_NAME = "VibeVoice 7B"
     else:
-        MODEL_PATH = "microsoft/VibeVoice-1.5b"
+        MODEL_PATH = "vibevoice/VibeVoice-1.5B"
         MODEL_NAME = "VibeVoice"
 
 
