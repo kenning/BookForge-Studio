@@ -58,8 +58,8 @@ def main():
         "core.main:app",
         host=args.host,
         port=args.port,
-        reload=True,
-        reload_dirs=["backend"],
+        reload=args.dev,
+        reload_dirs=["backend"] if args.dev else None,
     )
 
 

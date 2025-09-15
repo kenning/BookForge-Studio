@@ -4,9 +4,10 @@ setlocal EnableDelayedExpansion
 :main_menu
 cls
 echo.
-echo =====================================
-echo    BookForge Studio - Windows
-echo =====================================
+echo ====================================
+echo      BookForge Studio - Windows     
+echo       (Please use Python 3.10)
+echo ====================================
 echo.
 echo [Setup/Installation Commands]
 echo 1) Install dependencies (pip)
