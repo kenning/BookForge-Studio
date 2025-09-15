@@ -45,6 +45,21 @@ echo.
 echo Installing Python requirements...
 pip install -r requirements.txt
 echo.
+echo Installing FFmpeg...
+echo Checking if FFmpeg is already installed...
+ffmpeg -version >nul 2>&1
+if errorlevel 1 (
+    echo FFmpeg not found. Please install FFmpeg manually:
+    echo 1. Download from https://ffmpeg.org/download.html#build-windows
+    echo 2. Extract to a folder like C:\ffmpeg
+    echo 3. Add C:\ffmpeg\bin to your PATH environment variable
+    echo 4. Restart this script after installation
+    echo.
+    pause
+) else (
+    echo FFmpeg is already installed and available.
+)
+echo.
 echo Installation complete!
 pause
 goto main_menu

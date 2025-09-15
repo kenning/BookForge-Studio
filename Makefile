@@ -3,6 +3,7 @@
 ## [For users] Start the server
 .PHONY: main
 main: ## Run the main server
+	@which ffmpeg >/dev/null 2>&1 || { echo "Error: FFmpeg is not installed or not in PATH."; echo "Please install FFmpeg and add it to your PATH before running the main server."; echo "Visit https://ffmpeg.org/download.html for installation instructions."; exit 1; }
 	python app.py 
 
 .PHONY: vm-server
