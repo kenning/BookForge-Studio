@@ -29,4 +29,4 @@ Your answer should follow this JSON format:
 }}
 Make sure your response is valid JSON.
 
-Your answer should only contain the output of **Step 3** and can only contain quote identifiers and speakers. Never generate quote content and don’t explain your reasoning. Do not say 'Here is the output:' or 'The output of Step 3 is:' or anything like that before responding with the output of step 3. Don't forget to end your JSON with a '}}'.
+Your answer should only contain the output of **Step 3** and can only contain quote identifiers and speakers. Never generate quote content and don’t explain your reasoning. Do not say 'Here is the output:' or 'The output of Step 3 is:' or anything like that before responding with the output of step 3. Don't forget to end your JSON with a '}}}}'.
