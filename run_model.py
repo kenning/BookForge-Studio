@@ -109,6 +109,20 @@ def install_dependencies(model_dir):
             cwd=model_dir,
         )
 
+        # Install PyTorch with CUDA support on Windows
+        if platform.system() == "Windows":
+            print("Installing PyTorch with CUDA support for Windows...")
+            subprocess.run([
+                str(pip_exe), "install", 
+                "torch", "torchvision", "torchaudio", 
+                "--index-url", "https://download.pytorch.org/whl/cu118"
+            ], check=True, cwd=model_dir)
+        else:
+            # On Linux/Mac, default installation usually works
+            subprocess.run([
+                str(pip_exe), "install", "torch", "torchvision", "torchaudio"
+            ], check=True, cwd=model_dir)
+
         # Install requirements
         subprocess.run(
             [str(pip_exe), "install", "-r", "requirements.txt"],
