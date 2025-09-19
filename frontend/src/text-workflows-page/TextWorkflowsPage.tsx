@@ -24,6 +24,7 @@ const TextWorkflowsPage: React.FC = () => {
   const [isDirty, setIsDirty] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [refreshFileList, setRefreshFileList] = useState<(() => void) | null>(null);
+  const [scriptWasGeneratedRecently, setScriptWasGeneratedRecently] = useState(false);
 
   const [error, setError] = useState<string | null>(null);
 
@@ -71,6 +72,7 @@ const TextWorkflowsPage: React.FC = () => {
 
       setCurrentWorkflowName(scriptName);
       setIsDirty(false);
+      setScriptWasGeneratedRecently(false);
 
       // Refresh the file list to show the newly saved file
       if (refreshFileList) {
@@ -118,9 +120,7 @@ const TextWorkflowsPage: React.FC = () => {
   const handleScriptGenerated = (script: Script) => {
     setCurrentScript(script);
     setScriptTitle(script.title || '');
-    if (currentWorkflowName) {
-      setIsDirty(true);
-    }
+    setScriptWasGeneratedRecently(true);
   };
 
   const handleRemoveCsvFile = () => {
@@ -270,7 +270,7 @@ const TextWorkflowsPage: React.FC = () => {
                   directoryType="scripts"
                   title="Scripts"
                   currentItemName={currentWorkflowName}
-                  isDirty={isDirty}
+                  isDirty={isDirty || scriptWasGeneratedRecently}
                   isSaving={isSaving}
                   externalError={error}
                   callbacks={callbacks}
@@ -332,6 +332,7 @@ const TextWorkflowsPage: React.FC = () => {
                         onSave={handleScriptSave}
                         onDirtyStateChange={handleDirtyStateChange}
                         isSaving={isSaving}
+                        scriptWasGeneratedRecently={scriptWasGeneratedRecently}
                       />
                     )}
                   </>

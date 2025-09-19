@@ -2,9 +2,10 @@ fastapi>=0.104.1
 uvicorn[standard]>=0.24.0
 librosa==0.11.0
 s3tokenizer
-torch==2.6.0
-torchaudio==2.6.0
+torch
+torchaudio
 transformers==4.46.3
+torchvision
 diffusers==0.29.0
 resemble-perth==1.0.1
 conformer==0.3.2
