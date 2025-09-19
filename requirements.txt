@@ -3,7 +3,7 @@ fastapi>=0.104.1
 uvicorn[standard]>=0.24.0
 python-multipart>=0.0.6
 
-numpy<2
+numpy
 faster-whisper
 openai-whisper
 ffmpeg-python
