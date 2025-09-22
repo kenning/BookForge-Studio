@@ -2,7 +2,7 @@ import { ScriptHistoryGridCell, ScriptHistoryGridRow } from '../../types/readabl
 
 export const CELL_WIDTH = 320;
 export const ROW_HEIGHT = 200;
-export const LEFT_MARGIN = 80;
+export const LEFT_MARGIN = CELL_WIDTH + 60;
 
 // Calculate the position of a cell based on its row, column, and the current slide offset
 export const calculateCellPosition = (

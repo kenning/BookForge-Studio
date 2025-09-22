@@ -600,6 +600,7 @@
 .timeline-cell .actor-dropdown,
 .timeline-cell .voice-mode-dropdown {
   padding: 4px 8px;
+  max-width: 136px;
   border: 1px solid var(--border-secondary);
   border-radius: 4px;
   font-size: 0.75rem;
