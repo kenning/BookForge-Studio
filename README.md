@@ -1,3 +1,5 @@
+![Book forge studio logo](./readme-extras/logo.png)
+
 # BookForge Studio
 
 ## TL;DR Get it set up and running locally
@@ -73,7 +75,7 @@ drop files in the interface. (Output files will generate in `files/output`.)
 
 ## For Developers
 
-Check out [README-developers.md](./README-developers.md)
+Check out [README-developers.md](./readme-extras/README-developers.md)
 
 ## Licenses
 
