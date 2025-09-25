@@ -32,7 +32,8 @@ const TimelineCell: React.FC<TimelineCellProps> = ({
   actors,
   voiceModes,
 }) => {
-  const { registerAudioRef, unregisterAudioRef } = usePlaybackStore();
+  const { registerAudioRef, unregisterAudioRef, _getCurrentPlaybackTrack, pause } =
+    usePlaybackStore();
   const { updateCellInScript, handleEnqueueGeneration, script, generationQueue, setScript } =
     useTimelineGenerationStore();
 
@@ -49,6 +50,19 @@ const TimelineCell: React.FC<TimelineCellProps> = ({
 
   const handleCellSelect = useCallback(() => {
     if (!script) return;
+    const { isPlaying } = usePlaybackStore.getState();
+    if (isPlaying) {
+      const currentPlaybackTrack = _getCurrentPlaybackTrack();
+      if (currentPlaybackTrack) {
+        if (
+          currentPlaybackTrack.rowIndex === rowIndex &&
+          currentPlaybackTrack.cellIndex !== cellIndex
+        ) {
+          pause();
+        }
+      }
+    }
+
     const newScript = handleCellSelection(script, rowIndex, cellIndex);
     if (newScript) {
       setScript(newScript);

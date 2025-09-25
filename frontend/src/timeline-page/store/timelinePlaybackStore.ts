@@ -38,10 +38,11 @@ interface PlaybackState {
   setPlaybackSpeed: (speed: number) => void;
 
   // Internal
-  playCurrentTrack: () => void;
-  pauseCurrentTrack: () => void;
+  _playCurrentTrack: () => void;
+  _pauseCurrentTrack: () => void;
   onTrackEnded: () => void;
   _getAudioElement: () => HTMLAudioElement | undefined;
+  _getCurrentPlaybackTrack: () => PlaybackTrack | undefined;
 }
 
 const generateTrackKey = (rowIndex: number, cellIndex: number) => `${rowIndex}-${cellIndex}`;
@@ -91,12 +92,12 @@ export const usePlaybackStore = create<PlaybackState>((set, get) => ({
     if (playlist.length === 0 || currentTrackIndex < 0) return;
 
     set({ isPlaying: true });
-    get().playCurrentTrack();
+    get()._playCurrentTrack();
   },
 
   pause: () => {
     set({ isPlaying: false });
-    get().pauseCurrentTrack();
+    get()._pauseCurrentTrack();
   },
 
   next: () => {
@@ -123,7 +124,7 @@ export const usePlaybackStore = create<PlaybackState>((set, get) => ({
 
   goToIndex: (index: number) => {
     if (get().isPlaying) {
-      get().pauseCurrentTrack();
+      get().pause();
     }
     set({ currentTrackIndex: index });
 
@@ -167,7 +168,7 @@ export const usePlaybackStore = create<PlaybackState>((set, get) => ({
   },
 
   reset: () => {
-    get().pauseCurrentTrack();
+    get()._pauseCurrentTrack();
     set({
       playlist: [],
       currentTrackIndex: -1,
@@ -176,7 +177,7 @@ export const usePlaybackStore = create<PlaybackState>((set, get) => ({
     });
   },
 
-  playCurrentTrack: () => {
+  _playCurrentTrack: () => {
     const { playlist, currentTrackIndex } = get();
     if (currentTrackIndex < 0 || currentTrackIndex >= playlist.length) return;
 
@@ -192,7 +193,7 @@ export const usePlaybackStore = create<PlaybackState>((set, get) => ({
     }
   },
 
-  pauseCurrentTrack: () => {
+  _pauseCurrentTrack: () => {
     const { playlist, currentTrackIndex } = get();
     if (currentTrackIndex < 0 || currentTrackIndex >= playlist.length) return;
 
@@ -221,7 +222,7 @@ export const usePlaybackStore = create<PlaybackState>((set, get) => ({
   setPlaybackSpeed: (speed: number) => {
     set({ playbackSpeed: speed });
     if (get().isPlaying) {
-      get().playCurrentTrack();
+      get()._playCurrentTrack();
     }
   },
 
@@ -231,6 +232,11 @@ export const usePlaybackStore = create<PlaybackState>((set, get) => ({
     const trackKey = generateTrackKey(track.rowIndex, track.cellIndex);
     const audioElement = audioRefs.get(trackKey);
     return audioElement;
+  },
+
+  _getCurrentPlaybackTrack: () => {
+    const { playlist, currentTrackIndex } = get();
+    return playlist[currentTrackIndex];
   },
 }));
 
