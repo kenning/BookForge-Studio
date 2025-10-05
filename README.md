@@ -2,6 +2,11 @@
 
 # BookForge Studio
 
+Promo video on Youtube:
+
+[![Promo video](./readme-extras/promo-screenshot.png)](https://www.youtube.com/watch?v=GEheTgYcswE)
+
+
 ## TL;DR Get it set up and running locally
 
 1. Install ffmpeg and python 3.10. (Other python versions are currently untested.)
@@ -22,6 +27,11 @@
 * Optional: You can run multiple AI models at once if you wish.
 
 * Optional: You can also run [Ollama](https://ollama.com/) for local speaker identification. 
+
+## Video on how to install and use (Runpod)
+
+[![Runpod tutorial video](./readme-extras/tutorial-runpod-screenshot.png)](https://www.youtube.com/watch?v=1PT_CjX_hek)
+
 
 ## Concepts
 
