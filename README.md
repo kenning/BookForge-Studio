@@ -1,5 +1,3 @@
-![Book forge studio logo](./readme-extras/logo.png)
-
 # BookForge Studio
 
 Promo video on Youtube:
