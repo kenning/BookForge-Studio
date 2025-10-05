@@ -198,6 +198,8 @@
   background-color: var(--category-text-processing);
   border-width: 3px;
   z-index: 100;
+  width: 270px !important;
+
 }
 
 .timeline-cell.multi-speaker.active {

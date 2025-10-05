@@ -26,7 +26,6 @@ const WaveformPlayer: React.FC<WaveformPlayerProps> = React.memo(
   }) => {
     const audioRef = useRef<HTMLAudioElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    // const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
     const [peaks, setPeaks] = useState<number[]>([]);
@@ -166,7 +165,7 @@ const WaveformPlayer: React.FC<WaveformPlayerProps> = React.memo(
     const togglePlay = () => {
       if (isCurrentTrack) {
         if (isPlaying) {
-          console.log('isCurrentTrack and playing');
+          // isCurrentTrack and playing, so don't do anything -- bubble up to other event handlers
         } else {
           play();
         }
