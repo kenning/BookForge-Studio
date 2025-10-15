@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Script, FileInfo } from '../types/readableBackendTypes';
+import { Script, FileInfo, ScriptHistoryGridCell } from '../types/readableBackendTypes';
 import NavigationSidebar from '../components/NavigationSidebar';
 import SaveLoadBrowser from '../components/SaveLoadBrowser';
 import CollapsibleSidebar from '../components/CollapsibleSidebar';
@@ -8,6 +8,7 @@ import TimelineContainer from './components/TimelineContainer';
 import GenerationQueue from './components/GenerationQueue';
 import PlaybackQueue from './components/PlaybackQueue';
 import SpeakerAssignmentSection from './components/SpeakerAssignmentSection';
+import CellEditModal from './components/CellEditModal';
 import {
   handleAddCell,
   createDialogueCellFromSelection,
@@ -24,6 +25,14 @@ const TimelinePage: React.FC = () => {
   const [selectedCells, setSelectedCells] = useState<Set<string>>(new Set());
 
   const [titleInput, setTitleInput] = useState<string>('');
+
+  // Modal state
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingCell, setEditingCell] = useState<{
+    cell: ScriptHistoryGridCell;
+    rowIndex: number;
+    cellIndex: number;
+  } | null>(null);
 
   // Ref for auto-scrolling to current track
   const timelineContainerRef = useRef<HTMLDivElement>(null);
@@ -196,6 +205,19 @@ const TimelinePage: React.FC = () => {
     setScript(createDialogueCellFromSelection(script, new Set(sortedSelectedCells)));
     setSelectedCells(new Set());
     setDirty(true);
+  };
+
+  // Modal handlers
+  const handleOpenEditModal = (rowIndex: number, cellIndex: number) => {
+    if (!script) return;
+    const cell = script.history_grid.grid[rowIndex].cells[cellIndex];
+    setEditingCell({ cell, rowIndex, cellIndex });
+    setIsEditModalOpen(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+    setEditingCell(null);
   };
 
   // Get main track cells that need generation
@@ -379,6 +401,7 @@ const TimelinePage: React.FC = () => {
                       onAddCell={handleAddCellClick}
                       onAddDialogueCell={handleAddDialogueCellClick}
                       onCreateDialogue={handleCreateDialogue}
+                      onEditCell={handleOpenEditModal}
                     />
                   </div>
                 )}
@@ -388,6 +411,19 @@ const TimelinePage: React.FC = () => {
             )}
           </NotSidebarContentWithWrapper>
         </div>
+
+        {/* Edit Cell Modal */}
+        {editingCell && (
+          <CellEditModal
+            cell={editingCell.cell}
+            rowIndex={editingCell.rowIndex}
+            cellIndex={editingCell.cellIndex}
+            actors={actors}
+            voiceModes={voiceModes}
+            isOpen={isEditModalOpen}
+            onClose={handleCloseEditModal}
+          />
+        )}
       </div>
     </div>
   );

@@ -14,6 +14,7 @@ export interface TimelineCellProps {
   isActive: boolean;
   isSelected: boolean;
   onToggleCheckbox: () => void;
+  onEditCell: () => void;
   rowIndex: number;
   cellIndex: number;
   currentIndex: number;
@@ -25,6 +26,7 @@ const TimelineCell: React.FC<TimelineCellProps> = ({
   isActive,
   isSelected,
   onToggleCheckbox,
+  onEditCell,
   rowIndex,
   cellIndex,
   currentIndex,
@@ -228,7 +230,15 @@ const TimelineCell: React.FC<TimelineCellProps> = ({
             )}
           </div>
           {!isMultipleSpeaker && <div className="speaker-text">Speaker: {cell.speakers[0]}</div>}
-          <button className="cell-edit-button">Edit cell</button>
+          <button
+            className="cell-edit-button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onEditCell();
+            }}
+          >
+            Edit cell
+          </button>
         </div>
 
         <div className="audio-section">
