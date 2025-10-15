@@ -228,6 +228,7 @@ const TimelineCell: React.FC<TimelineCellProps> = ({
             )}
           </div>
           {!isMultipleSpeaker && <div className="speaker-text">Speaker: {cell.speakers[0]}</div>}
+          <button className="cell-edit-button">Edit cell</button>
         </div>
 
         <div className="audio-section">
