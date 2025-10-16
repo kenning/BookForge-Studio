@@ -1,0 +1,49 @@
+name: Frontend Build Check
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+    paths:
+      - 'frontend/**'
+      - 'Makefile'
+      - '.github/workflows/frontend-build-check.yml'
+
+jobs:
+  check-frontend-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        run: cd frontend && npm ci
+
+      - name: Build frontend
+        run: make frontend-build
+
+      - name: Check for uncommitted changes
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            echo "❌ ERROR: Frontend build produced uncommitted changes!"
+            echo ""
+            echo "The following files have changes:"
+            git status --porcelain
+            echo ""
+            echo "📝 Please run 'make frontend-build' locally and commit the changes before submitting your PR."
+            echo ""
+            echo "Diff of changes:"
+            git diff
+            exit 1
+          else
+            echo "✅ SUCCESS: Frontend build is up to date!"
+          fi
