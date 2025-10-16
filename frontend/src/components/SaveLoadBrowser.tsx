@@ -162,7 +162,6 @@ const SaveLoadBrowser: React.FC<SaveLoadBrowserProps> = ({
   // Expanded folders state
   const [expandedFolders, setExpandedFolders] = useState<Set<string>>(() => {
     const stored = localStorage.getItem('expandedFolders');
-    console.log('initial load: ', stored);
     return stored ? new Set(JSON.parse(stored)) : new Set();
   });
 
@@ -186,7 +185,6 @@ const SaveLoadBrowser: React.FC<SaveLoadBrowserProps> = ({
       newExpanded.add(path);
     }
     setExpandedFolders(newExpanded);
-    console.log(newExpanded);
     localStorage.setItem('expandedFolders', JSON.stringify([...newExpanded]));
   };
 
