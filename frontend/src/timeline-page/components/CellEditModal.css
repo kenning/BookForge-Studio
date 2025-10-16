@@ -1,0 +1,210 @@
+/* Modal Backdrop */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+/* Modal Content */
+.modal-content {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  border: 2px solid var(--border-primary);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-primary);
+  background: var(--bg-tertiary);
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  background: var(--bg-quaternary);
+  color: var(--text-primary);
+}
+
+/* Modal Body */
+.modal-body {
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modal-section {
+  margin-bottom: 1.5rem;
+}
+
+.modal-section:last-child {
+  margin-bottom: 0;
+}
+
+.modal-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+/* Form Inputs */
+.modal-input,
+.modal-textarea,
+.modal-select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-secondary);
+  border-radius: 6px;
+  background: var(--input-bg);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  margin-bottom: 0.5rem;
+}
+
+.modal-input:focus,
+.modal-textarea:focus,
+.modal-select:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--input-focus-shadow);
+}
+
+/* Dirty State - Fields that have been modified */
+.modal-input.dirty,
+.modal-textarea.dirty,
+.modal-select.dirty {
+  border: 2px solid var(--accent-warning);
+  border-color: var(--accent-warning);
+}
+
+.modal-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.modal-select {
+  cursor: pointer;
+}
+
+/* Remove Generated Audio Button */
+.modal-remove-audio-btn {
+  padding: 0.625rem 1rem;
+  background: var(--accent-danger);
+  color: var(--text-inverse);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.modal-remove-audio-btn:hover {
+  background: var(--status-error-border);
+  transform: translateY(-1px);
+}
+
+.modal-info-text {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  font-style: italic;
+}
+
+/* Modal Footer */
+.modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border-primary);
+  background: var(--bg-tertiary);
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.modal-cancel-btn {
+  padding: 0.75rem 1.5rem;
+  background: var(--bg-quaternary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.modal-cancel-btn:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--border-secondary);
+  transform: translateY(-1px);
+}
+
+.modal-cancel-btn:active {
+  transform: translateY(0);
+}
+
+.modal-save-btn {
+  padding: 0.75rem 1.5rem;
+  background: var(--accent-primary);
+  color: var(--text-inverse);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.modal-save-btn:hover {
+  background: var(--accent-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px var(--shadow-accent);
+}
+
+.modal-save-btn:active {
+  transform: translateY(0);
+}

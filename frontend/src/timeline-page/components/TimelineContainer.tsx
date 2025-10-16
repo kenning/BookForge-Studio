@@ -22,6 +22,7 @@ interface TimelineContainerProps {
   onAddCell: (rowIndex: number) => void;
   onAddDialogueCell: (rowIndex: number) => void;
   onCreateDialogue: () => void;
+  onEditCell: (rowIndex: number, cellIndex: number) => void;
 }
 
 const TimelineContainer: React.FC<TimelineContainerProps> = ({
@@ -32,6 +33,7 @@ const TimelineContainer: React.FC<TimelineContainerProps> = ({
   onAddCell,
   onAddDialogueCell,
   onCreateDialogue,
+  onEditCell,
 }) => {
   const { script } = useTimelineGenerationStore();
   if (!script) return null;
@@ -68,6 +70,7 @@ const TimelineContainer: React.FC<TimelineContainerProps> = ({
                       isActive={isActive}
                       isSelected={isSelected}
                       onToggleCheckbox={() => onCellToggleCheckbox(rowIndex, cellIndex)}
+                      onEditCell={() => onEditCell(rowIndex, cellIndex)}
                       rowIndex={rowIndex}
                       cellIndex={cellIndex}
                       currentIndex={row.current_index}
