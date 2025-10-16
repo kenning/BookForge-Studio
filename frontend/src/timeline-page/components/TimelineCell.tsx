@@ -349,4 +349,18 @@ const TimelineCell: React.FC<TimelineCellProps> = ({
   );
 };
 
-export default TimelineCell;
+// Memoize the component to prevent unnecessary re-renders
+export default React.memo(TimelineCell, (prevProps, nextProps) => {
+  // Only re-render if these props change
+  return (
+    prevProps.isActive === nextProps.isActive &&
+    prevProps.isSelected === nextProps.isSelected &&
+    prevProps.currentIndex === nextProps.currentIndex &&
+    prevProps.cell === nextProps.cell &&
+    prevProps.height === nextProps.height &&
+    prevProps.rowIndex === nextProps.rowIndex &&
+    prevProps.cellIndex === nextProps.cellIndex &&
+    prevProps.actors === nextProps.actors &&
+    prevProps.voiceModes === nextProps.voiceModes
+  );
+});
