@@ -1,5 +1,5 @@
 import { Script, ScriptHistoryGridCell } from '../../types/readableBackendTypes';
-import { makeHiddenCell, newPointerCell } from './timelineUtils';
+import { makeHiddenCell } from './timelineUtils';
 
 // Create a dialogue cell from multiple selected cells
 export const createDialogueCellFromSelection = (

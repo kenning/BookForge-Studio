@@ -1,7 +1,7 @@
 import React from 'react';
 import { AddCellButtonProps } from '../types';
 
-console.log('example change to cause MR to fail.')
+console.log('one more example change to cause MR to fail.')
 
 const AddCellButton: React.FC<AddCellButtonProps> = ({
   rowIndex,

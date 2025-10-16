@@ -188,7 +188,7 @@ const CellEditModal: React.FC<CellEditModalProps> = ({
               {editedTexts.length === 1 ? 'Text' : 'Texts'}
             </label>
             {editedTexts.map((text, index) => {
-              if (editedTexts.length > 1 && index == 0) return null
+              if (editedTexts.length > 1 && index === 0) return null
               return (
                 <textarea
                   key={index}

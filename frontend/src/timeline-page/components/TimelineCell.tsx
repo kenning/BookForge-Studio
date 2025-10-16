@@ -69,7 +69,7 @@ const TimelineCell: React.FC<TimelineCellProps> = ({
     if (newScript) {
       setScript(newScript);
     }
-  }, [script, rowIndex, cellIndex, setScript]);
+  }, [script, rowIndex, cellIndex, setScript, _getCurrentPlaybackTrack, pause]);
 
   const handleAudioRefCleanup = useCallback(() => {
     unregisterAudioRef(trackKey);
