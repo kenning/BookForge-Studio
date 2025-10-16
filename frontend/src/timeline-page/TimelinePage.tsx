@@ -413,13 +413,15 @@ const TimelinePage: React.FC = () => {
         </div>
 
         {/* Edit Cell Modal */}
-        {editingCell && (
+        {editingCell && script && (
           <CellEditModal
             cell={editingCell.cell}
             rowIndex={editingCell.rowIndex}
             cellIndex={editingCell.cellIndex}
             actors={actors}
             voiceModes={voiceModes}
+            script={script}
+            availableSpeakers={speakers}
             isOpen={isEditModalOpen}
             onClose={handleCloseEditModal}
           />

@@ -113,6 +113,14 @@
   box-shadow: 0 0 0 3px var(--input-focus-shadow);
 }
 
+/* Dirty State - Fields that have been modified */
+.modal-input.dirty,
+.modal-textarea.dirty,
+.modal-select.dirty {
+  border: 2px solid var(--accent-warning);
+  border-color: var(--accent-warning);
+}
+
 .modal-textarea {
   resize: vertical;
   min-height: 80px;

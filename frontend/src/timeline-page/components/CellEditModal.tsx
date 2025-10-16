@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ScriptHistoryGridCell, FileInfo } from '../../types/readableBackendTypes';
+import { ScriptHistoryGridCell, FileInfo, Script } from '../../types/readableBackendTypes';
 import './CellEditModal.css';
 
 export interface CellEditModalProps {
@@ -8,6 +8,8 @@ export interface CellEditModalProps {
   cellIndex: number;
   actors: FileInfo[];
   voiceModes: FileInfo[];
+  script: Script;
+  availableSpeakers: string[];
   isOpen: boolean;
   onClose: () => void;
 }
@@ -18,6 +20,8 @@ const CellEditModal: React.FC<CellEditModalProps> = ({
   cellIndex,
   actors,
   voiceModes,
+  script,
+  availableSpeakers,
   isOpen,
   onClose,
 }) => {
@@ -28,6 +32,12 @@ const CellEditModal: React.FC<CellEditModalProps> = ({
   const [editedVoiceMode, setEditedVoiceMode] = useState<string>('');
   const [shouldRemoveAudio, setShouldRemoveAudio] = useState(false);
 
+  // Store original values for comparison
+  const [originalTexts, setOriginalTexts] = useState<string[]>([]);
+  const [originalSpeakers, setOriginalSpeakers] = useState<string[]>([]);
+  const [originalActors, setOriginalActors] = useState<string[]>([]);
+  const [originalVoiceMode, setOriginalVoiceMode] = useState<string>('');
+
   // Initialize state when modal opens or cell changes
   useEffect(() => {
     if (isOpen) {
@@ -36,8 +46,34 @@ const CellEditModal: React.FC<CellEditModalProps> = ({
       setEditedActors([...cell.actors]);
       setEditedVoiceMode(cell.voice_mode);
       setShouldRemoveAudio(false);
+
+      // Store originals
+      setOriginalTexts([...cell.texts]);
+      setOriginalSpeakers([...cell.speakers]);
+      setOriginalActors([...cell.actors]);
+      setOriginalVoiceMode(cell.voice_mode);
     }
   }, [isOpen, cell]);
+
+  // Helper function to check if a field is dirty
+  const isFieldDirty = (fieldName: string, index?: number): boolean => {
+    if (fieldName === 'text' && index !== undefined) {
+      return editedTexts[index] !== originalTexts[index];
+    }
+    if (fieldName === 'speaker' && index !== undefined) {
+      return editedSpeakers[index] !== originalSpeakers[index];
+    }
+    if (fieldName === 'actor' && index !== undefined) {
+      return editedActors[index] !== originalActors[index];
+    }
+    if (fieldName === 'voice_mode') {
+      return editedVoiceMode !== originalVoiceMode;
+    }
+    if (fieldName === 'remove_audio') {
+      return shouldRemoveAudio;
+    }
+    return false;
+  };
 
   if (!isOpen) return null;
 
@@ -49,14 +85,46 @@ const CellEditModal: React.FC<CellEditModalProps> = ({
 
   const handleSpeakerChange = (index: number, value: string) => {
     const newSpeakers = [...editedSpeakers];
-    newSpeakers[index] = value;
+
+    // If "New speaker..." is selected, prompt for custom input
+    if (value === '__new_speaker__') {
+      const customSpeaker = prompt('Enter new speaker name:');
+      if (customSpeaker && customSpeaker.trim()) {
+        newSpeakers[index] = customSpeaker.trim();
+      } else {
+        return; // User cancelled or entered empty string
+      }
+    } else {
+      newSpeakers[index] = value;
+    }
+
     setEditedSpeakers(newSpeakers);
+
+    // Auto-fill actor and voice mode based on speaker assignment map
+    const speaker = newSpeakers[index];
+    const assignedActor = script.speaker_to_actor_map[speaker];
+    const assignedVoiceMode = script.speaker_to_voice_mode_map[speaker];
+
+    if (assignedActor) {
+      const newActors = [...editedActors];
+      newActors[index] = assignedActor;
+      setEditedActors(newActors);
+    }
+
+    // Only auto-fill voice mode if single speaker
+    if (assignedVoiceMode && editedSpeakers.length === 1) {
+      setEditedVoiceMode(assignedVoiceMode);
+    }
   };
 
   const handleActorChange = (index: number, value: string) => {
     const newActors = [...editedActors];
     newActors[index] = value;
     setEditedActors(newActors);
+  };
+
+  const handleVoiceModeChange = (value: string) => {
+    setEditedVoiceMode(value);
   };
 
   const handleRemoveGeneratedAudio = () => {
@@ -121,7 +189,7 @@ const CellEditModal: React.FC<CellEditModalProps> = ({
               return (
                 <textarea
                   key={index}
-                  className="modal-textarea"
+                  className={`modal-textarea ${isFieldDirty('text', index) ? 'dirty' : ''}`}
                   value={text}
                   onChange={(e) => handleTextChange(index, e.target.value)}
                   rows={3}
@@ -137,14 +205,20 @@ const CellEditModal: React.FC<CellEditModalProps> = ({
               {editedSpeakers.length === 1 ? 'Speaker' : 'Speakers'}
             </label>
             {editedSpeakers.map((speaker, index) => (
-              <input
+              <select
                 key={index}
-                type="text"
-                className="modal-input"
+                className={`modal-select ${isFieldDirty('speaker', index) ? 'dirty' : ''}`}
                 value={speaker}
                 onChange={(e) => handleSpeakerChange(index, e.target.value)}
-                placeholder={`Enter speaker ${editedSpeakers.length > 1 ? index + 1 : ''}...`}
-              />
+              >
+                <option value="">Select Speaker</option>
+                {availableSpeakers.map((availSpeaker) => (
+                  <option key={availSpeaker} value={availSpeaker}>
+                    {availSpeaker}
+                  </option>
+                ))}
+                <option value="__new_speaker__">New speaker...</option>
+              </select>
             ))}
           </div>
 
@@ -156,7 +230,7 @@ const CellEditModal: React.FC<CellEditModalProps> = ({
             {editedActors.map((actor, index) => (
               <select
                 key={index}
-                className="modal-select"
+                className={`modal-select ${isFieldDirty('actor', index) ? 'dirty' : ''}`}
                 value={actor}
                 onChange={(e) => handleActorChange(index, e.target.value)}
               >
@@ -185,9 +259,9 @@ const CellEditModal: React.FC<CellEditModalProps> = ({
           <div className="modal-section">
             <label className="modal-label">Voice Mode</label>
             <select
-              className="modal-select"
+              className={`modal-select ${isFieldDirty('voice_mode') ? 'dirty' : ''}`}
               value={editedVoiceMode}
-              onChange={(e) => setEditedVoiceMode(e.target.value)}
+              onChange={(e) => handleVoiceModeChange(e.target.value)}
             >
               <option value="">Select Voice Mode</option>
               {voiceModes.map((voiceMode) => (
