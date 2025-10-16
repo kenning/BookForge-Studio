@@ -30,6 +30,8 @@ interface FolderItemProps {
   fileFilter?: (file: FileInfo) => boolean;
   onFileClick?: (file: FileInfo) => void;
   currentItemName?: string;
+  expandedFolders: Set<string>;
+  onToggleFolder: (path: string) => void;
 }
 
 const FolderItem: React.FC<FolderItemProps> = ({
@@ -38,26 +40,13 @@ const FolderItem: React.FC<FolderItemProps> = ({
   fileFilter,
   onFileClick,
   currentItemName,
+  expandedFolders,
+  onToggleFolder,
 }) => {
-  const [expandedFolders, setExpandedFolders] = useState<Set<string>>(() => {
-    const stored = localStorage.getItem('expandedFolders');
-    console.log('initial load: ', stored)
-    return stored ? new Set(JSON.parse(stored)) : new Set();
-  });
-
   const isExpanded = level === 0 || expandedFolders.has(directory.path);
 
   const toggleExpanded = () => {
-    const newExpanded = new Set(expandedFolders);
-    if (isExpanded) {
-      newExpanded.delete(directory.path);
-    } else {
-      newExpanded.add(directory.path);
-    }
-    setExpandedFolders(newExpanded);
-    console.log(newExpanded)
-    // @ts-ignore
-    localStorage.setItem('expandedFolders', JSON.stringify([...newExpanded]));
+    onToggleFolder(directory.path);
   };
 
   const filteredFiles = fileFilter ? directory.files.filter(fileFilter) : directory.files;
@@ -130,6 +119,8 @@ const FolderItem: React.FC<FolderItemProps> = ({
               fileFilter={fileFilter}
               onFileClick={onFileClick}
               currentItemName={currentItemName}
+              expandedFolders={expandedFolders}
+              onToggleFolder={onToggleFolder}
             />
           ))}
         </div>
@@ -168,6 +159,13 @@ const SaveLoadBrowser: React.FC<SaveLoadBrowserProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Expanded folders state
+  const [expandedFolders, setExpandedFolders] = useState<Set<string>>(() => {
+    const stored = localStorage.getItem('expandedFolders');
+    console.log('initial load: ', stored);
+    return stored ? new Set(JSON.parse(stored)) : new Set();
+  });
+
   // Internal state to track if current item has been saved in this session
   const [hasBeenSaved, setHasBeenSaved] = useState(false);
   const [lastCurrentItemName, setLastCurrentItemName] = useState<string>('');
@@ -179,6 +177,18 @@ const SaveLoadBrowser: React.FC<SaveLoadBrowserProps> = ({
       setLastCurrentItemName(currentItemName || '');
     }
   }, [currentItemName, lastCurrentItemName]);
+
+  const handleToggleFolder = (path: string) => {
+    const newExpanded = new Set(expandedFolders);
+    if (newExpanded.has(path)) {
+      newExpanded.delete(path);
+    } else {
+      newExpanded.add(path);
+    }
+    setExpandedFolders(newExpanded);
+    console.log(newExpanded);
+    localStorage.setItem('expandedFolders', JSON.stringify([...newExpanded]));
+  };
 
   const loadFiles = React.useCallback(async () => {
     try {
@@ -296,6 +306,8 @@ const SaveLoadBrowser: React.FC<SaveLoadBrowserProps> = ({
               fileFilter={fileFilter}
               onFileClick={handleFileClick}
               currentItemName={currentItemName}
+              expandedFolders={expandedFolders}
+              onToggleFolder={handleToggleFolder}
             />
           )}
 
