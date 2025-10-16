@@ -12,6 +12,7 @@ export interface CellEditModalProps {
   availableSpeakers: string[];
   isOpen: boolean;
   onClose: () => void;
+  onSave: (rowIndex: number, cellIndex: number, updatedCell: ScriptHistoryGridCell) => void;
 }
 
 const CellEditModal: React.FC<CellEditModalProps> = ({
@@ -24,6 +25,7 @@ const CellEditModal: React.FC<CellEditModalProps> = ({
   availableSpeakers,
   isOpen,
   onClose,
+  onSave,
 }) => {
   // Local state for editing
   const [editedTexts, setEditedTexts] = useState<string[]>([]);
@@ -142,12 +144,13 @@ const CellEditModal: React.FC<CellEditModalProps> = ({
       waveform_data: shouldRemoveAudio ? [] : cell.waveform_data,
     };
 
-    console.log('Updated cell:', {
-      rowIndex,
-      cellIndex,
-      cell: updatedCell,
-    });
+    // Call the onSave callback to actually update the script
+    onSave(rowIndex, cellIndex, updatedCell);
 
+    onClose();
+  };
+
+  const handleCancel = () => {
     onClose();
   };
 
@@ -298,6 +301,9 @@ const CellEditModal: React.FC<CellEditModalProps> = ({
         </div>
 
         <div className="modal-footer">
+          <button className="modal-cancel-btn" onClick={handleCancel}>
+            Cancel
+          </button>
           <button className="modal-save-btn" onClick={handleSaveChanges}>
             Save Changes
           </button>

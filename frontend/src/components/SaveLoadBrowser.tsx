@@ -41,6 +41,7 @@ const FolderItem: React.FC<FolderItemProps> = ({
 }) => {
   const [expandedFolders, setExpandedFolders] = useState<Set<string>>(() => {
     const stored = localStorage.getItem('expandedFolders');
+    console.log('initial load: ', stored)
     return stored ? new Set(JSON.parse(stored)) : new Set();
   });
 
@@ -54,6 +55,7 @@ const FolderItem: React.FC<FolderItemProps> = ({
       newExpanded.add(directory.path);
     }
     setExpandedFolders(newExpanded);
+    console.log(newExpanded)
     // @ts-ignore
     localStorage.setItem('expandedFolders', JSON.stringify([...newExpanded]));
   };

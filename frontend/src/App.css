@@ -1642,7 +1642,6 @@ textarea.text-input {
 
 .favorite-btn.favorited:hover {
   background-color: rgba(243, 156, 18, 0.2);
-  transform: scale(1.1);
 }
 
 .clips-section {

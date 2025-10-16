@@ -220,6 +220,31 @@ const TimelinePage: React.FC = () => {
     setEditingCell(null);
   };
 
+  const handleSaveCellEdit = (rowIndex: number, cellIndex: number, updatedCell: ScriptHistoryGridCell) => {
+    if (!script) return;
+
+    // Create updated script with the edited cell
+    const updatedScript = {
+      ...script,
+      history_grid: {
+        ...script.history_grid,
+        grid: script.history_grid.grid.map((row, rIndex) =>
+          rIndex === rowIndex
+            ? {
+                ...row,
+                cells: row.cells.map((cell, cIndex) =>
+                  cIndex === cellIndex ? updatedCell : cell
+                ),
+              }
+            : row
+        ),
+      },
+    };
+
+    setScript(updatedScript);
+    setDirty(true);
+  };
+
   // Get main track cells that need generation
   const getMainTrackCellsForGeneration = (): { cellKeys: Set<string>; count: number } => {
     if (!script) return { cellKeys: new Set(), count: 0 };
@@ -424,6 +449,7 @@ const TimelinePage: React.FC = () => {
             availableSpeakers={speakers}
             isOpen={isEditModalOpen}
             onClose={handleCloseEditModal}
+            onSave={handleSaveCellEdit}
           />
         )}
       </div>
