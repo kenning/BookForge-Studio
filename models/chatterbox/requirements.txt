@@ -15,6 +15,7 @@ pydantic>=2.5.0
 perth
 pyloudnorm
 omegaconf
+torchcodec
 
-spacy-pkuseg
-pykakasi==2.3.0
+# spacy-pkuseg
+# pykakasi==2.3.0
