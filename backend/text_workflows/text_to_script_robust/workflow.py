@@ -16,7 +16,7 @@ import difflib
 from backend.core.data_types.script_and_text_types import Script
 from backend.core.utils.file_utils import save_generic_json_file
 from langchain_ollama import ChatOllama
-from langchain.schema import HumanMessage, SystemMessage
+from langchain_core.messages import HumanMessage, SystemMessage
 from backend.text_workflows.csv_to_psss import csv_content_to_script
 from backend.text_workflows.websocket_utils import send_text_workflow_progress
 from backend.core.config import SCRIPTS_DIR
