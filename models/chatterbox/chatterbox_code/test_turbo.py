@@ -8,8 +8,9 @@ import sys
 import os
 import traceback
 
-# Add the parent directory to the path so we can import tts_turbo
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# Add the parent directory to the path so we can import chatterbox_code as a package
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, parent_dir)
 
 import torch
 
@@ -20,7 +21,7 @@ def test_chatterbox_turbo():
     print("=" * 80)
     
     try:
-        from tts_turbo import ChatterboxTurboTTS
+        from chatterbox_code.tts_turbo import ChatterboxTurboTTS
         
         # Determine device
         device = "cuda" if torch.cuda.is_available() else "cpu"
