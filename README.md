@@ -4,7 +4,6 @@ Promo video on Youtube:
 
 [![Promo video](./readme-extras/promo-screenshot.png)](https://www.youtube.com/watch?v=GEheTgYcswE)
 
-
 ## TL;DR Get it set up and running locally
 
 1. Install ffmpeg and python 3.10. (Other python versions are currently untested.)
@@ -26,9 +25,11 @@ Promo video on Youtube:
 
 * Optional: You can also run [Ollama](https://ollama.com/) for local speaker identification. 
 
-## Video on how to install and use (Runpod)
+## Tutorial video: How to install and use (Runpod and Windows)
 
 [![Runpod tutorial video](./readme-extras/tutorial-runpod-screenshot.png)](https://www.youtube.com/watch?v=1PT_CjX_hek)
+
+**[Another youtube video: Windows promo and quick install guide](https://www.youtube.com/watch?v=Af41wMYQ2Xw)**
 
 
 ## Concepts
@@ -45,11 +46,11 @@ Promo video on Youtube:
    to support whichever modes are viable, or both for experimentation purposes, with voice clones 
    correctly assigned to each party.
 
-* **Models run on a separate process to the main server.** This means you need to run the main
+* **Models run on separate processes from the main server.** This means you need to run the main
    server, open another command prompt, and then start a process for the model you want to use.
    Some of these models take tons of VRAM -- higgs specifically is gigantic. Some are smaller like
    chatterbox or VibeVoice-1.5B (small). **Each 'service' command will automatically create a 
-   virtual environment just for the model you choose.**
+   virtual environment just for the model you choose.** Additionally, ollama (for example) will be run as another process. 
 
 -- 
 
@@ -61,7 +62,7 @@ Promo video on Youtube:
    cfg scale inference, in case one works better with a specific character or context).
 * **BookForge Studio Script**: The fundamental 'project file' for BookForge Studio, this file 
    includes all your work on a chapter of a book, including each line of dialogue, what character
-   said it, what actor and voice mode is assigned, and links to all generated audio.
+   said it, what actor and voice mode is assigned, and links to all generated audio. (We say "chapter" not "book" because the performance will be awful in several ways if you try to do an entire book in one file.)
 * **Text Workflows**: Various ways to turn text or a CSV into a BFS Script. These can include
    using external api's, a local LLM (hosted with ollama), or simply dragging a pre-annotated CSV.
 
@@ -70,6 +71,8 @@ Promo video on Youtube:
 Audio files, text files (like an audiobook, a chapter of an audiobook, or CSV files which include 
 audiobook text and speakers) should be placed in the `files/input` folder. You can also drag and
 drop files in the interface. (Output files will generate in `files/output`.)
+
+## Books and voice clips you get for free
 
 **BookForge Studio comes conveniently pre-loaded** with:
 * 24+ public domain books (in English) pre-annotated with speakers from the 
@@ -91,12 +94,12 @@ This repo is MIT licensed.
 
 Chatterbox and VibeVoice are MIT. Dia and Higgs are Apache 2.0. 
 
+Some of the voice clips are completely free to use in any context, some are free for non-commercial use, and then there are a couple other wrinkles. Read [the readme for our dataset](https://huggingface.co/datasets/nick-mccormick/tts-voices-sampler) to get the details.
+
+
 ## Possible future work
 
-If there is interest, our team may provide support for IndexTTS2. However, the emotion control is
-a pretty large new feature just for that one model, adoption appears low for now, and 
-[the Bilibili license](https://github.com/index-tts/index-tts?tab=License-1-ov-file#readme) is
-not exactly full open source.
+This project was mostly made mid-2025 and some other models have released while we were making the tutorial videos and etc. Let us know if you want to see some specific models, or even better, make a PR -- the 'microservice' setup means that all you need to do to add a new model to this project is add it in `./models/<model name>/` and `./backend/models/<model name>/`.
 
 ## Thanks
 
