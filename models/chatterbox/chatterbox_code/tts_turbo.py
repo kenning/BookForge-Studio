@@ -5,7 +5,6 @@ from pathlib import Path
 
 import librosa
 import torch
-import perth
 import pyloudnorm as ln
 
 from safetensors.torch import load_file
@@ -127,7 +126,6 @@ class ChatterboxTurboTTS:
         self.tokenizer = tokenizer
         self.device = device
         self.conds = conds
-        self.watermarker = perth.PerthImplicitWatermarker()
 
     @classmethod
     def from_local(cls, ckpt_dir, device) -> 'ChatterboxTurboTTS':
@@ -257,7 +255,6 @@ class ChatterboxTurboTTS:
         temperature=0.8,
         top_k=1000,
         norm_loudness=True,
-        disable_watermark=False,
     ):
         if audio_prompt_path:
             self.prepare_conditionals(audio_prompt_path, exaggeration=exaggeration, norm_loudness=norm_loudness)
@@ -293,6 +290,6 @@ class ChatterboxTurboTTS:
             n_cfm_timesteps=2,
         )
         wav = wav.squeeze(0).detach().cpu().numpy()
-        if not disable_watermark:
-            wav = self.watermarker.apply_watermark(wav, sample_rate=self.sr)
+        # if not disable_watermark:
+        #     wav = self.watermarker.apply_watermark(wav, sample_rate=self.sr)
         return torch.from_numpy(wav).unsqueeze(0)
