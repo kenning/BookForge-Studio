@@ -45,6 +45,7 @@ from model_shared_utils import resolve_file_path
 
 try:
     from chatterbox_code.tts import ChatterboxTTS
+    from chatterbox_code.tts_turbo import ChatterboxTurboTTS
     import torchaudio
 
     CHATTERBOX_AVAILABLE = True
@@ -59,13 +60,22 @@ logger = logging.getLogger(__name__)
 # Global model state
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 MODEL = None
+MODEL_TYPE = None  # Track which model is loaded: 'standard' or 'turbo'
 
 app = FastAPI(title="Chatterbox TTS Service", version="1.0.0")
 
 
-def get_or_load_model():
-    """Load the Chatterbox model."""
-    global MODEL
+def get_or_load_model(use_turbo=True):
+    """Load the Chatterbox model (standard or turbo)."""
+    global MODEL, MODEL_TYPE
+
+    # Determine which model type to load
+    desired_type = 'turbo' if use_turbo else 'standard'
+
+    # If model is already loaded but wrong type, unload it first
+    if MODEL is not None and MODEL_TYPE != desired_type:
+        logger.info(f"Switching from {MODEL_TYPE} to {desired_type} model...")
+        unload_model()
 
     if MODEL is None:
         if not CHATTERBOX_AVAILABLE:
@@ -73,12 +83,19 @@ def get_or_load_model():
                 status_code=500, detail="Chatterbox dependencies not available"
             )
 
-        logger.info("Loading Chatterbox TTS model...")
-        MODEL = ChatterboxTTS.from_pretrained(DEVICE)
+        if use_turbo:
+            logger.info("Loading Chatterbox Turbo TTS model...")
+            MODEL = ChatterboxTurboTTS.from_pretrained(DEVICE)
+            MODEL_TYPE = 'turbo'
+        else:
+            logger.info("Loading Chatterbox TTS model...")
+            MODEL = ChatterboxTTS.from_pretrained(DEVICE)
+            MODEL_TYPE = 'standard'
+
         if hasattr(MODEL, "to") and str(MODEL.device) != DEVICE:
             MODEL.to(DEVICE)
         logger.info(
-            f"Chatterbox model loaded on device: {getattr(MODEL, 'device', 'unknown')}"
+            f"Chatterbox {MODEL_TYPE} model loaded on device: {getattr(MODEL, 'device', 'unknown')}"
         )
 
     return MODEL
@@ -86,12 +103,13 @@ def get_or_load_model():
 
 def unload_model():
     """Unload the model and free memory."""
-    global MODEL
+    global MODEL, MODEL_TYPE
 
     if MODEL is not None:
-        logger.info("Unloading Chatterbox model...")
+        logger.info(f"Unloading Chatterbox {MODEL_TYPE} model...")
         del MODEL
         MODEL = None
+        MODEL_TYPE = None
 
         # Force garbage collection
         gc.collect()
@@ -135,8 +153,11 @@ async def text_to_speech(voice_id: str, request: TextToSpeechRequest):
                 detail=f"Voice file not found: {voice_path} (resolved: {resolved_voice_path})",
             )
 
+        # Determine which model to use
+        use_turbo = request.parameters.get("cb_turbo", True)
+
         # Load model
-        model = get_or_load_model()
+        model = get_or_load_model(use_turbo=use_turbo)
 
         # Set seed if provided
         if "seed" in request.parameters:
@@ -145,14 +166,22 @@ async def text_to_speech(voice_id: str, request: TextToSpeechRequest):
             if torch.cuda.is_available():
                 torch.cuda.manual_seed(seed)
 
-        # Prepare generation parameters
+        # Prepare generation parameters (common to both models)
         gen_kwargs = {
             "exaggeration": request.parameters.get("exaggeration", 0.5),
             "temperature": request.parameters.get("temperature", 0.75),
             "cfg_weight": request.parameters.get("cfg_weight", 0.5),
             "disable_watermark": request.parameters.get("disable_watermark", False),
             "audio_prompt_path": resolved_voice_path,
+            "repetition_penalty": request.parameters.get("repetition_penalty", 1.2),
+            "min_p": request.parameters.get("min_p", 0.05),
+            "top_p": request.parameters.get("top_p", 1.0),
         }
+
+        # Add turbo-specific parameters
+        if use_turbo:
+            gen_kwargs["top_k"] = request.parameters.get("top_k", 1000)
+            gen_kwargs["norm_loudness"] = request.parameters.get("norm_loudness", True)
 
         # Create output directory if needed
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
@@ -185,8 +214,11 @@ async def text_to_dialogue(request: TextToDialogueRequest):
         if len(request.inputs) < 1:
             raise HTTPException(status_code=400, detail="At least one input required")
 
+        # Determine which model to use
+        use_turbo = request.parameters.get("cb_turbo", True)
+
         # Load model
-        model = get_or_load_model()
+        model = get_or_load_model(use_turbo=use_turbo)
 
         output_path = request.output_filepath
 
@@ -213,14 +245,22 @@ async def text_to_dialogue(request: TextToDialogueRequest):
                 )
                 continue
 
-            # Prepare generation parameters
+            # Prepare generation parameters (common to both models)
             gen_kwargs = {
                 "exaggeration": request.parameters.get("exaggeration", 0.5),
                 "temperature": request.parameters.get("temperature", 0.75),
                 "cfg_weight": request.parameters.get("cfg_weight", 0.5),
                 "disable_watermark": request.parameters.get("disable_watermark", False),
                 "audio_prompt_path": resolved_voice_path,
+                "repetition_penalty": request.parameters.get("repetition_penalty", 1.2),
+                "min_p": request.parameters.get("min_p", 0.05),
+                "top_p": request.parameters.get("top_p", 1.0),
             }
+
+            # Add turbo-specific parameters
+            if use_turbo:
+                gen_kwargs["top_k"] = request.parameters.get("top_k", 1000)
+                gen_kwargs["norm_loudness"] = request.parameters.get("norm_loudness", True)
 
             # Generate audio for this input
             wav = model.generate(inp.text.strip(), **gen_kwargs)

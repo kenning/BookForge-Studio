@@ -13,6 +13,12 @@ async def process(context):
         context: StepContext to set TTS parameters
     """
     # Set default values if not already set
+    if "cb_turbo" not in context.parameters:
+        context.parameters["cb_turbo"] = True
+
+    if "cb_multilingual" not in context.parameters:
+        context.parameters["cb_multilingual"] = False
+
     if "exaggeration" not in context.parameters:
         context.parameters["exaggeration"] = 0.5
 
@@ -51,6 +57,16 @@ STEP_METADATA = {
     "version": "1.0.0",
     "model_requirement": "chatterbox",
     "parameters": {
+        "cb_turbo": {
+            "type": "bool",
+            "default": True,
+            "description": "Use Chatterbox TURBO model!",
+        },
+        "cb_multilingual": {
+            "type": "bool",
+            "default": False,
+            "description": "Use Chatterbox Multilingual model",
+        },
         "exaggeration": {
             "type": "float",
             "default": 0.5,
