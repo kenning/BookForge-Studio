@@ -187,7 +187,7 @@ Common error codes:
 - `exaggeration`: 0.5 (default)
 - `temperature`: 0.75 (default)
 - `cfg_weight`: 0.5 (default)
-- `disable_watermark`: false (default)
+<!-- - `disable_watermark`: false (default) -->
 - `seed`: Optional
 
 ### Higgs (Port 8005)

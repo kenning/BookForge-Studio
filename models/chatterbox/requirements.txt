@@ -15,3 +15,6 @@ pydantic>=2.5.0
 perth
 pyloudnorm
 omegaconf
+
+spacy-pkuseg
+pykakasi==2.3.0

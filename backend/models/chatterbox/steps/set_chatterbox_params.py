@@ -37,8 +37,8 @@ async def process(context):
     if "repetition_penalty" not in context.parameters:
         context.parameters["repetition_penalty"] = 1.2
 
-    if "disable_watermark" not in context.parameters:
-        context.parameters["disable_watermark"] = False
+    # if "disable_watermark" not in context.parameters:
+    #     context.parameters["disable_watermark"] = False
 
     if "max_attempts_per_candidate" not in context.parameters:
         context.parameters["max_attempts_per_candidate"] = 3
