@@ -1,5 +1,7 @@
 # BookForge Studio
 
+## December 17, 2025: Now with support for Chatterbox Turbo model!
+
 Promo video on Youtube:
 
 [![Promo video](./readme-extras/promo-screenshot.png)](https://www.youtube.com/watch?v=GEheTgYcswE)

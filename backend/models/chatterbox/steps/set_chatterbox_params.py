@@ -16,8 +16,8 @@ async def process(context):
     if "cb_turbo" not in context.parameters:
         context.parameters["cb_turbo"] = True
 
-    if "cb_multilingual" not in context.parameters:
-        context.parameters["cb_multilingual"] = False
+    # if "cb_multilingual" not in context.parameters:
+    #     context.parameters["cb_multilingual"] = False
 
     if "exaggeration" not in context.parameters:
         context.parameters["exaggeration"] = 0.5
@@ -62,11 +62,11 @@ STEP_METADATA = {
             "default": True,
             "description": "Use Chatterbox TURBO model!",
         },
-        "cb_multilingual": {
-            "type": "bool",
-            "default": False,
-            "description": "Use Chatterbox Multilingual model",
-        },
+        # "cb_multilingual": {
+        #     "type": "bool",
+        #     "default": False,
+        #     "description": "Use Chatterbox Multilingual model",
+        # },
         "exaggeration": {
             "type": "float",
             "default": 0.5,
